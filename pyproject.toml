@@ -1,12 +1,19 @@
 [build-system]
-requires = ["maturin>=1.0,<2.0"]
+requires = ["maturin>=1.0,<2.0", "polars>=0.20.0"]
 build-backend = "maturin"
 
 [project]
-name = "polars_geocode"
-requires-python = ">=3.8"
+name = "polars-geocode"
+description = "Geocoding-related functions"
+readme = "README.md"
+authors = [
+  { name="Marco Gorelli", email="33491632+MarcoGorelli@users.noreply.github.com" },
+]
+license = { file = "LICENSE" }
 classifiers = [
   "Programming Language :: Rust",
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
+version = "0.1.0"
+requires-python = ">=3.8"
