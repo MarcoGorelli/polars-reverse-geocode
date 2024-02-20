@@ -1,0 +1,5 @@
+maturin
+polars
+pytest
+mypy
+ruff
