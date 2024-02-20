@@ -23,4 +23,3 @@ where
             .collect_ca(ca.name())
     }
 }
-

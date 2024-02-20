@@ -1,12 +1,11 @@
 #![allow(clippy::unused_unit)]
 use polars::prelude::*;
+use polars_arrow::array::MutablePlString;
+use polars_core::utils::align_chunks_binary;
 use pyo3_polars::derive::polars_expr;
 use std::fmt::Write;
-use polars_core::utils::align_chunks_binary;
-use polars_arrow::array::MutablePlString;
 
 use reverse_geocoder::ReverseGeocoder;
-
 
 #[polars_expr(output_type=String)]
 fn reverse_geocode(inputs: &[Series]) -> PolarsResult<Series> {
@@ -35,7 +34,8 @@ fn reverse_geocode(inputs: &[Series]) -> PolarsResult<Series> {
             }
 
             mutarr.freeze().boxed()
-        }).collect();
+        })
+        .collect();
     let out: StringChunked = unsafe { ChunkedArray::from_chunks("placeholder", chunks) };
     Ok(out.into_series())
 }
