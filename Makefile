@@ -21,7 +21,6 @@ pre-commit: venv
 
 test: venv
 	.venv/bin/python -m pytest tests
-	.venv/bin/python -m pytest polars_reverse_geocode
 
 run: install
 	source .venv/bin/activate
