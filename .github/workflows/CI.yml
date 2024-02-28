@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - master
     tags:
       - '*'
   pull_request:
@@ -36,10 +37,10 @@ jobs:
       - name: Set up Rust
         run: rustup show
       - uses: mozilla-actions/sccache-action@v0.0.3
-      - run: python3 -m venv venv
-      - run: cargo fmt --all && cargo clippy --all-features
-      - run: venv/bin/python -m maturin develop
-      - run: venv/bin/python -m pytest
+      - run: make venv
+      - run: make pre-commit
+      - run: make install
+      - run: make test
 
   linux:
     runs-on: ubuntu-latest
