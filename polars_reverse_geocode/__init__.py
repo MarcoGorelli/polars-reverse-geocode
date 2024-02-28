@@ -21,8 +21,8 @@ def reverse_geocode(lat: IntoExpr, lon: IntoExpr) -> pl.Expr:
         lib=lib, symbol="reverse_geocode", is_elementwise=True, args=[lon]
     )
 
-def geohash(lat: IntoExpr, lon: IntoExpr) -> pl.Expr:
+def geohash(lat: IntoExpr, lon: IntoExpr, *, precision: int = 6) -> pl.Expr:
     lat = parse_into_expr(lat)
     return lat.register_plugin(
-        lib=lib, symbol="geohash", is_elementwise=True, args=[lon]
+        lib=lib, symbol="geohash", is_elementwise=True, args=[lon], kwargs={"precision": precision}
     )
