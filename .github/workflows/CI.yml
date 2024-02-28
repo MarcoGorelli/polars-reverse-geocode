@@ -38,8 +38,8 @@ jobs:
       - uses: mozilla-actions/sccache-action@v0.0.3
       - run: python3 -m venv venv
       - run: cargo fmt --all && cargo clippy --all-features
-      - run: maturin develop
-      - run: pytest
+      - run: venv/bin/python -m maturin develop
+      - run: venv/bin/python -m pytest
 
   linux:
     runs-on: ubuntu-latest
