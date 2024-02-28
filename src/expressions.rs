@@ -1,13 +1,14 @@
 #![allow(clippy::unused_unit)]
-use serde::Deserialize;
 use polars::prelude::*;
 use polars_arrow::array::MutablePlString;
 use polars_core::utils::align_chunks_binary;
 use pyo3_polars::derive::polars_expr;
+use serde::Deserialize;
 
 use reverse_geocoder::ReverseGeocoder;
 
-const BASE_32: &'static str = "0123456789bcdefghjkmnpqrstuvwxyz";
+const BASE_32: &str = "0123456789bcdefghjkmnpqrstuvwxyz";
+const BITS: [i32; 5] = [16, 8, 4, 2, 1];
 
 #[polars_expr(output_type=String)]
 fn reverse_geocode(inputs: &[Series]) -> PolarsResult<Series> {
@@ -78,7 +79,6 @@ fn geohash(inputs: &[Series], kwargs: GeoHashKwargs) -> PolarsResult<Series> {
 fn impl_geohash(latitude: f64, longitude: f64, precision: usize, buffer: &mut String) {
     let mut lat_interval = (-90.0, 90.0);
     let mut lon_interval = (-180.0, 180.0);
-    let bits = [16, 8, 4, 2, 1];
     let mut bit = 0;
     let mut ch = 0;
     let mut even = true;
@@ -86,7 +86,7 @@ fn impl_geohash(latitude: f64, longitude: f64, precision: usize, buffer: &mut St
         if even {
             let mid = (lon_interval.0 + lon_interval.1) / 2.0;
             if longitude > mid {
-                ch |= bits[bit];
+                ch |= BITS[bit];
                 lon_interval = (mid, lon_interval.1);
             } else {
                 lon_interval = (lon_interval.0, mid);
@@ -94,7 +94,7 @@ fn impl_geohash(latitude: f64, longitude: f64, precision: usize, buffer: &mut St
         } else {
             let mid = (lat_interval.0 + lat_interval.1) / 2.0;
             if latitude > mid {
-                ch |= bits[bit];
+                ch |= BITS[bit];
                 lat_interval = (mid, lat_interval.1);
             } else {
                 lat_interval = (lat_interval.0, mid);

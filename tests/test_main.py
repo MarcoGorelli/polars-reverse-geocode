@@ -16,8 +16,8 @@ def test_main() -> None:
             "lat": [37.7749, 51.01, 52.5],
             "lon": [-122.4194, -3.9, -0.91],
             "city": ["San Francisco", "South Molton", "Market Harborough"],
-            'geohash_3': ['9q8', 'gcj', 'gcr'],
-            'geohash_6': ['9q8yyk', 'gcj4pq', 'gcr6em'],
+            "geohash_3": ["9q8", "gcj", "gcr"],
+            "geohash_6": ["9q8yyk", "gcj4pq", "gcr6em"],
         }
     )
     assert_frame_equal(result, expected)
