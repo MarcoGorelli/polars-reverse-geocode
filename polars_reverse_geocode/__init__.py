@@ -7,7 +7,7 @@ from polars.utils.udfs import _get_shared_lib_location
 
 from polars_reverse_geocode.utils import parse_into_expr
 
-__version__ = "0.1.9"
+__version__ = "0.1.10"
 
 if TYPE_CHECKING:
     from polars.type_aliases import IntoExpr
