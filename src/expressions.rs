@@ -1,4 +1,5 @@
 #![allow(clippy::unused_unit)]
+use h3o::{LatLng, Resolution};
 use polars::prelude::*;
 use polars_arrow::array::MutablePlString;
 use polars_core::utils::align_chunks_binary;
@@ -51,8 +52,6 @@ fn h3(inputs: &[Series], kwargs: H3Kwargs) -> PolarsResult<Series> {
     let lhs = inputs[0].f64()?;
     let rhs = inputs[1].f64()?;
 
-    use h3o::{LatLng, Resolution};
-
     let resolution = match kwargs.resolution {
         1 => Resolution::One,
         2 => Resolution::Two,
@@ -63,8 +62,14 @@ fn h3(inputs: &[Series], kwargs: H3Kwargs) -> PolarsResult<Series> {
         7 => Resolution::Seven,
         8 => Resolution::Eight,
         9 => Resolution::Nine,
+        10 => Resolution::Ten,
+        11 => Resolution::Eleven,
+        12 => Resolution::Twelve,
+        13 => Resolution::Thirteen,
+        14 => Resolution::Fourteen,
+        15 => Resolution::Fifteen,
         _ => {
-            polars_bail!(InvalidOperation: "expected resolution between 1 and 9, got {}", kwargs.resolution)
+            polars_bail!(InvalidOperation: "expected resolution between 1 and 15, got {}", kwargs.resolution)
         }
     };
 

@@ -16,6 +16,7 @@ def test_main() -> None:
     )
     assert_frame_equal(result, expected)
 
+
 def test_h3() -> None:
     df = pl.DataFrame({"lat": [37.7749, 51.01, 52.5], "lon": [-122.4194, -3.9, -0.91]})
     result = df.with_columns(h3=h3("lat", "lon"))
@@ -23,7 +24,7 @@ def test_h3() -> None:
         {
             "lat": [37.7749, 51.01, 52.5],
             "lon": [-122.4194, -3.9, -0.91],
-            "h3": ['89283082803ffff', '89195b5b04fffff', '8919436a5d7ffff'],
+            "h3": ["89283082803ffff", "89195b5b04fffff", "8919436a5d7ffff"],
         }
     )
     assert_frame_equal(result, expected)
@@ -34,7 +35,7 @@ def test_h3() -> None:
         {
             "lat": [37.7749, 51.01, 52.5],
             "lon": [-122.4194, -3.9, -0.91],
-            "h3": ['86283082fffffff', '86195b5b7ffffff', '8619436a7ffffff'],
+            "h3": ["86283082fffffff", "86195b5b7ffffff", "8619436a7ffffff"],
         }
     )
     assert_frame_equal(result, expected)
