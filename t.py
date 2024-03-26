@@ -1,6 +1,6 @@
 import polars as pl
 
-from polars_reverse_geocode import reverse_geocode, h3
+from polars_reverse_geocode import h3
 
 df = pl.DataFrame({
     'lat': [37.7749, 51.01, 52.5],

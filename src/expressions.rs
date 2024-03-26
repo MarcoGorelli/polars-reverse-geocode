@@ -63,7 +63,9 @@ fn h3(inputs: &[Series], kwargs: H3Kwargs) -> PolarsResult<Series> {
         7 => Resolution::Seven,
         8 => Resolution::Eight,
         9 => Resolution::Nine,
-        _ => polars_bail!(InvalidOperation: "expected resolution between 1 and 9, got {}", kwargs.resolution),
+        _ => {
+            polars_bail!(InvalidOperation: "expected resolution between 1 and 9, got {}", kwargs.resolution)
+        }
     };
 
     let (lhs, rhs) = align_chunks_binary(lhs, rhs);
