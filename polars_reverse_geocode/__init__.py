@@ -26,3 +26,9 @@ def reverse_geocode(lat: IntoExpr, long: IntoExpr) -> pl.Expr:
     return register_plugin(
         lib=lib, symbol="reverse_geocode", is_elementwise=True, args=[lat, long]
     )
+
+def h3(lat: IntoExpr, long: IntoExpr) -> pl.Expr:
+    lat = parse_into_expr(lat)
+    return register_plugin(
+        lib=lib, symbol="h3", is_elementwise=True, args=[lat, long]
+    )

@@ -78,6 +78,7 @@ def register_plugin(
         is_elementwise=is_elementwise,
     )
 
+
 def parse_version(version: Sequence[str | int]) -> tuple[int, ...]:
     # Simple version parser; split into a tuple of ints for comparison.
     # vendored from Polars
