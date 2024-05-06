@@ -27,6 +27,7 @@ def find_closest_city(lat: IntoExpr, long: IntoExpr) -> pl.Expr:
         lib=lib, symbol="reverse_geocode", is_elementwise=True, args=[lat, long]
     )
 
+
 # alias for backwards compatibility
 reverse_geocode = find_closest_city
 

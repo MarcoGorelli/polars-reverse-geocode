@@ -1,10 +1,8 @@
 #![allow(clippy::unused_unit)]
-use h3o::{LatLng, Resolution};
 use polars::prelude::*;
 use polars_arrow::array::MutablePlString;
 use polars_core::utils::align_chunks_binary;
 use pyo3_polars::derive::polars_expr;
-use serde::Deserialize;
 use std::fmt::Write;
 
 use reverse_geocoder::ReverseGeocoder;
