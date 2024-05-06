@@ -21,19 +21,18 @@ else:
     lib = Path(__file__).parent
 
 
-def reverse_geocode(lat: IntoExpr, long: IntoExpr) -> pl.Expr:
+def find_closest_city(lat: IntoExpr, long: IntoExpr) -> pl.Expr:
     lat = parse_into_expr(lat)
     return register_plugin(
         lib=lib, symbol="reverse_geocode", is_elementwise=True, args=[lat, long]
     )
 
+# alias for backwards compatibility
+reverse_geocode = find_closest_city
 
-def h3(lat: IntoExpr, long: IntoExpr, *, resolution: int = 9) -> pl.Expr:
+
+def find_closest_state(lat: IntoExpr, long: IntoExpr) -> pl.Expr:
     lat = parse_into_expr(lat)
     return register_plugin(
-        lib=lib,
-        symbol="h3",
-        is_elementwise=True,
-        args=[lat, long],
-        kwargs={"resolution": resolution},
+        lib=lib, symbol="find_closest_state", is_elementwise=True, args=[lat, long]
     )

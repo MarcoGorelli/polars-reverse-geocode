@@ -42,36 +42,11 @@ fn reverse_geocode(inputs: &[Series]) -> PolarsResult<Series> {
     Ok(out.into_series())
 }
 
-#[derive(Deserialize)]
-struct H3Kwargs {
-    resolution: u8,
-}
-
 #[polars_expr(output_type=String)]
-fn h3(inputs: &[Series], kwargs: H3Kwargs) -> PolarsResult<Series> {
+fn find_closest_state(inputs: &[Series]) -> PolarsResult<Series> {
     let lhs = inputs[0].f64()?;
     let rhs = inputs[1].f64()?;
-
-    let resolution = match kwargs.resolution {
-        1 => Resolution::One,
-        2 => Resolution::Two,
-        3 => Resolution::Three,
-        4 => Resolution::Four,
-        5 => Resolution::Five,
-        6 => Resolution::Six,
-        7 => Resolution::Seven,
-        8 => Resolution::Eight,
-        9 => Resolution::Nine,
-        10 => Resolution::Ten,
-        11 => Resolution::Eleven,
-        12 => Resolution::Twelve,
-        13 => Resolution::Thirteen,
-        14 => Resolution::Fourteen,
-        15 => Resolution::Fifteen,
-        _ => {
-            polars_bail!(InvalidOperation: "expected resolution between 1 and 15, got {}", kwargs.resolution)
-        }
-    };
+    let geocoder = ReverseGeocoder::new();
 
     let (lhs, rhs) = align_chunks_binary(lhs, rhs);
     let chunks = lhs
@@ -84,9 +59,7 @@ fn h3(inputs: &[Series], kwargs: H3Kwargs) -> PolarsResult<Series> {
             for (lhs_opt_val, rhs_opt_val) in lhs_arr.iter().zip(rhs_arr.iter()) {
                 match (lhs_opt_val, rhs_opt_val) {
                     (Some(lhs_val), Some(rhs_val)) => {
-                        let coord = LatLng::new(*lhs_val, *rhs_val).expect("valid coord");
-                        let cell = coord.to_cell(resolution);
-                        let res = cell.to_string();
+                        let res = &geocoder.search((*lhs_val, *rhs_val)).record.admin1;
                         buf.clear();
                         write!(buf, "{res}").unwrap();
                         mutarr.push(Some(&buf))
