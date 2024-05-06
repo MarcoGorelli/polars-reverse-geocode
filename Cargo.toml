@@ -1,6 +1,6 @@
 [package]
 name = "polars-reverse-geocode"
-version = "0.3.4"
+version = "0.4.0"
 edition = "2021"
 
 [lib]
