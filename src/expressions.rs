@@ -1,8 +1,8 @@
 #![allow(clippy::unused_unit)]
 use polars::prelude::*;
 use polars_arrow::array::MutablePlString;
-use polars_core::utils::align_chunks_binary;
 use polars_core::prelude::arity::binary_elementwise_into_string_amortized;
+use polars_core::utils::align_chunks_binary;
 use pyo3_polars::derive::polars_expr;
 use std::fmt::Write;
 
@@ -13,11 +13,9 @@ fn reverse_geocode(inputs: &[Series]) -> PolarsResult<Series> {
     let lhs = inputs[0].f64()?;
     let rhs = inputs[1].f64()?;
     let geocoder = ReverseGeocoder::new();
-    let out = binary_elementwise_into_string_amortized(
-        lhs, rhs, |lat, lon, buf| {
-            write!(buf, "{}", geocoder.search((lat, lon)).record.name).unwrap();
-        }
-    );
+    let out = binary_elementwise_into_string_amortized(lhs, rhs, |lat, lon, buf| {
+        write!(buf, "{}", geocoder.search((lat, lon)).record.name).unwrap();
+    });
     Ok(out.into_series())
 }
 
