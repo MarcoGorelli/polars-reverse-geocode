@@ -67,7 +67,7 @@ jobs:
       - run: curl -LsSf https://astral.sh/uv/install.sh | sh
       - run: uv venv --seed
       - run: . .venv/bin/activate && uv pip install -r requirements.txt
-      - run: . .venv/bin/activate && uv pip install polars==0.20.6  # min version
+      - run: . .venv/bin/activate && uv pip install polars==1.3  # min version
       - run: make install
       - run: make test
 
