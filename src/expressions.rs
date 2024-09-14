@@ -48,6 +48,6 @@ fn find_closest_state(inputs: &[Series]) -> PolarsResult<Series> {
             mutarr.freeze().boxed()
         })
         .collect();
-    let out: StringChunked = unsafe { ChunkedArray::from_chunks("placeholder", chunks) };
+    let out: StringChunked = unsafe { ChunkedArray::from_chunks(PlSmallStr::EMPTY, chunks) };
     Ok(out.into_series())
 }
