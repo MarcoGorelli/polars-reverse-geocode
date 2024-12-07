@@ -35,3 +35,11 @@ def find_closest_state(lat: IntoExpr, long: IntoExpr) -> pl.Expr:
         function_name="find_closest_state",
         is_elementwise=True,
     )
+
+def find_closest_country(lat: IntoExpr, long: IntoExpr) -> pl.Expr:
+    return register_plugin_function(
+        args=[lat, long],
+        plugin_path=LIB,
+        function_name="find_closest_country",
+        is_elementwise=True,
+    )

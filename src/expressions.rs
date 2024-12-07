@@ -19,8 +19,7 @@ fn reverse_geocode(inputs: &[Series]) -> PolarsResult<Series> {
     Ok(out.into_series())
 }
 
-#[polars_expr(output_type=String)]
-fn find_closest_state(inputs: &[Series]) -> PolarsResult<Series> {
+fn reverse_geocode_chunks(inputs: &[Series], return_type: String) -> PolarsResult<Series> {
     let lhs = inputs[0].f64()?;
     let rhs = inputs[1].f64()?;
     let geocoder = ReverseGeocoder::new();
@@ -36,7 +35,17 @@ fn find_closest_state(inputs: &[Series]) -> PolarsResult<Series> {
             for (lhs_opt_val, rhs_opt_val) in lhs_arr.iter().zip(rhs_arr.iter()) {
                 match (lhs_opt_val, rhs_opt_val) {
                     (Some(lhs_val), Some(rhs_val)) => {
-                        let res = &geocoder.search((*lhs_val, *rhs_val)).record.admin1;
+                        let record = &geocoder.search((*lhs_val, *rhs_val)).record;
+                        let res: &String;
+                        if return_type == "city" {
+                            res = &record.name;
+                        } else if return_type == "state" {
+                            res = &record.admin1;
+                        } else if return_type == "country" {
+                            res = &record.cc;
+                        } else {
+                            res = &record.name;
+                        }
                         buf.clear();
                         write!(buf, "{res}").unwrap();
                         mutarr.push(Some(&buf))
@@ -50,4 +59,14 @@ fn find_closest_state(inputs: &[Series]) -> PolarsResult<Series> {
         .collect();
     let out: StringChunked = unsafe { ChunkedArray::from_chunks(PlSmallStr::EMPTY, chunks) };
     Ok(out.into_series())
+}
+
+#[polars_expr(output_type=String)]
+fn find_closest_state(inputs: &[Series]) -> PolarsResult<Series> {
+    return reverse_geocode_chunks(inputs, "state".to_string());
+}
+
+#[polars_expr(output_type=String)]
+fn find_closest_country(inputs: &[Series]) -> PolarsResult<Series> {
+    return reverse_geocode_chunks(inputs, "country".to_string());
 }
