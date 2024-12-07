@@ -63,10 +63,10 @@ fn reverse_geocode_chunks(inputs: &[Series], return_type: String) -> PolarsResul
 
 #[polars_expr(output_type=String)]
 fn find_closest_state(inputs: &[Series]) -> PolarsResult<Series> {
-    return reverse_geocode_chunks(inputs, "state".to_string());
+    reverse_geocode_chunks(inputs, "state".to_string())
 }
 
 #[polars_expr(output_type=String)]
 fn find_closest_country(inputs: &[Series]) -> PolarsResult<Series> {
-    return reverse_geocode_chunks(inputs, "country".to_string());
+    reverse_geocode_chunks(inputs, "country".to_string())
 }

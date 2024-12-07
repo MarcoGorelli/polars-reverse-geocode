@@ -1,7 +1,11 @@
 import polars as pl
 from polars.testing import assert_frame_equal
 
-from polars_reverse_geocode import reverse_geocode, find_closest_state, find_closest_country
+from polars_reverse_geocode import (
+    reverse_geocode,
+    find_closest_state,
+    find_closest_country,
+)
 
 
 def test_main() -> None:
