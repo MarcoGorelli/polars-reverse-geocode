@@ -19,7 +19,7 @@ def find_closest_city(lat: IntoExpr, long: IntoExpr) -> pl.Expr:
     return register_plugin_function(
         args=[lat, long],
         plugin_path=LIB,
-        function_name="reverse_geocode",
+        function_name="find_closest_city",
         is_elementwise=True,
     )
 
