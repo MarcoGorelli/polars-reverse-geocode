@@ -13,10 +13,7 @@ enum LocationLevel {
     Country,
 }
 
-fn reverse_geocode_chunks(
-    inputs: &[Series],
-    location_level: LocationLevel,
-) -> PolarsResult<Series> {
+fn reverse_geocode(inputs: &[Series], location_level: LocationLevel) -> PolarsResult<Series> {
     let lhs = inputs[0].f64()?;
     let rhs = inputs[1].f64()?;
     let geocoder = ReverseGeocoder::new();
@@ -35,15 +32,15 @@ fn reverse_geocode_chunks(
 
 #[polars_expr(output_type=String)]
 fn find_closest_city(inputs: &[Series]) -> PolarsResult<Series> {
-    reverse_geocode_chunks(inputs, LocationLevel::City)
+    reverse_geocode(inputs, LocationLevel::City)
 }
 
 #[polars_expr(output_type=String)]
 fn find_closest_state(inputs: &[Series]) -> PolarsResult<Series> {
-    reverse_geocode_chunks(inputs, LocationLevel::State)
+    reverse_geocode(inputs, LocationLevel::State)
 }
 
 #[polars_expr(output_type=String)]
 fn find_closest_country(inputs: &[Series]) -> PolarsResult<Series> {
-    reverse_geocode_chunks(inputs, LocationLevel::Country)
+    reverse_geocode(inputs, LocationLevel::Country)
 }
