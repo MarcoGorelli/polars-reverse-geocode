@@ -868,7 +868,7 @@ dependencies = [
 
 [[package]]
 name = "polars-reverse-geocode"
-version = "0.7.0"
+version = "0.7.1"
 dependencies = [
  "polars",
  "polars-arrow",
