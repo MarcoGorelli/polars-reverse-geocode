@@ -6,6 +6,9 @@
 # - removed x86, armv7, s390x, ppc64le targets from Linux
 # - removed free-threaded wheels
 # - removed musllinux
+# - install polars in the `pytest` step
+# - for linux, also install ruff and mypy in the `pytest` step
+#   and then run `make pre-commit`
 name: CI
 
 on:
@@ -63,8 +66,9 @@ jobs:
           python3 -m venv .venv
           source .venv/bin/activate
           pip install polars-reverse-geocode --find-links dist --force-reinstall
-          pip install pytest
-          pytest
+          pip install pytest polars ruff mypy
+          make test
+          make pre-commit
 
   windows:
     runs-on: ${{ matrix.platform.runner }}
@@ -104,7 +108,7 @@ jobs:
           python3 -m venv .venv
           source .venv/Scripts/activate
           pip install polars-reverse-geocode --find-links dist --force-reinstall
-          pip install pytest
+          pip install pytest polars
           pytest
 
   macos:
@@ -144,7 +148,7 @@ jobs:
           python3 -m venv .venv
           source .venv/bin/activate
           pip install polars-reverse-geocode --find-links dist --force-reinstall
-          pip install pytest
+          pip install pytest polars
           pytest
 
   sdist:
