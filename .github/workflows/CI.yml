@@ -90,13 +90,6 @@ jobs:
           args: --release --out dist
           sccache: 'true'
           manylinux: auto
-      # - name: Build free-threaded wheels
-      #   uses: PyO3/maturin-action@v1
-      #   with:
-      #     target: ${{ matrix.platform.target }}
-      #     args: --release --out dist -i python3.13t
-      #     sccache: 'true'
-      #     manylinux: auto
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
@@ -121,12 +114,6 @@ jobs:
         with:
           target: ${{ matrix.platform.target }}
           args: --release --out dist
-          sccache: 'true'
-      - name: Build free-threaded wheels
-        uses: PyO3/maturin-action@v1
-        with:
-          target: ${{ matrix.platform.target }}
-          args: --release --out dist -i python3.13t
           sccache: 'true'
       - name: Upload wheels
         uses: actions/upload-artifact@v4
@@ -154,12 +141,6 @@ jobs:
           target: ${{ matrix.platform.target }}
           args: --release --out dist
           sccache: 'true'
-      # - name: Build free-threaded wheels
-      #   uses: PyO3/maturin-action@v1
-      #   with:
-      #     target: ${{ matrix.platform.target }}
-      #     args: --release --out dist -i python3.13t
-      #     sccache: 'true'
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
