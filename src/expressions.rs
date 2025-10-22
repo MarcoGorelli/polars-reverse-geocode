@@ -25,7 +25,7 @@ fn reverse_geocode(inputs: &[Series], location_level: LocationLevel) -> PolarsRe
             LocationLevel::State => &record.admin1,
             LocationLevel::Country => &record.cc,
         };
-        write!(buf, "{}", res).unwrap();
+        write!(buf, "{res}").unwrap();
     });
     Ok(out.into_series())
 }

@@ -14,6 +14,7 @@ install-release:
 	source .venv/bin/activate && maturin develop --release
 
 pre-commit:
+	rustup component add rustfmt clippy --toolchain nightly-2025-05-21
 	cargo fmt --all && cargo clippy --all-features
 	.venv/bin/python -m ruff check . --fix --exit-non-zero-on-fix
 	.venv/bin/python -m ruff format polars_reverse_geocode tests
