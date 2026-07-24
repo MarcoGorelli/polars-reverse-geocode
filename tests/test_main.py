@@ -59,6 +59,7 @@ def _run_timing_script(script: str) -> None:
         [sys.executable, "-c", textwrap.dedent(script)],
         capture_output=True,
         text=True,
+        check=False,
     )
     assert result.returncode == 0, (
         f"timing script failed:\nstdout:\n{result.stdout}\nstderr:\n{result.stderr}"
