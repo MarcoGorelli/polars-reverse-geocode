@@ -1,6 +1,10 @@
 import polars as pl
 
-from polars_reverse_geocode import find_closest_city, find_closest_state, find_closest_country
+from polars_reverse_geocode import (
+    find_closest_city,
+    find_closest_country,
+    find_closest_state,
+)
 
 df = pl.DataFrame({
     'lat': [37.7749, 51.01, 52.5],

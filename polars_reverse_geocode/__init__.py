@@ -1,10 +1,9 @@
 from __future__ import annotations
 
+from pathlib import Path
 from typing import TYPE_CHECKING, Literal
 
-from pathlib import Path
 import polars as pl
-
 from polars.plugins import register_plugin_function
 
 __version__ = "0.1.9"
