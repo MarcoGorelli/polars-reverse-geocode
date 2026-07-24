@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Literal
 
 from pathlib import Path
 import polars as pl
@@ -14,13 +14,18 @@ if TYPE_CHECKING:
 
 LIB = Path(__file__).parent
 
+CacheMode = Literal["do_not_cache", "cache_forever"]
 
-def find_closest_city(lat: IntoExpr, long: IntoExpr) -> pl.Expr:
+
+def find_closest_city(
+    lat: IntoExpr, long: IntoExpr, *, cache_mode: CacheMode = "cache_forever"
+) -> pl.Expr:
     return register_plugin_function(
         args=[lat, long],
         plugin_path=LIB,
         function_name="find_closest_city",
         is_elementwise=True,
+        kwargs={"cache_mode": cache_mode},
     )
 
 
@@ -28,19 +33,25 @@ def find_closest_city(lat: IntoExpr, long: IntoExpr) -> pl.Expr:
 reverse_geocode = find_closest_city
 
 
-def find_closest_state(lat: IntoExpr, long: IntoExpr) -> pl.Expr:
+def find_closest_state(
+    lat: IntoExpr, long: IntoExpr, *, cache_mode: CacheMode = "cache_forever"
+) -> pl.Expr:
     return register_plugin_function(
         args=[lat, long],
         plugin_path=LIB,
         function_name="find_closest_state",
         is_elementwise=True,
+        kwargs={"cache_mode": cache_mode},
     )
 
 
-def find_closest_country(lat: IntoExpr, long: IntoExpr) -> pl.Expr:
+def find_closest_country(
+    lat: IntoExpr, long: IntoExpr, *, cache_mode: CacheMode = "cache_forever"
+) -> pl.Expr:
     return register_plugin_function(
         args=[lat, long],
         plugin_path=LIB,
         function_name="find_closest_country",
         is_elementwise=True,
+        kwargs={"cache_mode": cache_mode},
     )
