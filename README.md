@@ -43,3 +43,24 @@ shape: (3, 5)
 │ 52.5    ┆ -0.91     ┆ Market Harborough ┆ England    ┆ GB           │
 └─────────┴───────────┴───────────────────┴────────────┴──────────────┘
 ```
+
+## Caching
+
+Loading the geocoding data set has a fixed cost of roughly 150ms, which is
+noticeable when doing repeated, one-off lookups (e.g. sequential/chained
+calls in a UI). Each `find_closest_*` function accepts a `cache_mode`
+keyword argument to control this caching behaviour:
+
+- `"cache_forever"` (default): loads the data set once per process and
+  keeps it in memory (~2.5GB RAM) for the lifetime of the process, so
+  subsequent calls are fast.
+- `"do_not_cache"`: does not populate the shared, process-wide cache.
+  If the cache has already been populated (e.g. by an earlier
+  `"cache_forever"` call), it's reused; otherwise, the data set is loaded
+  fresh on every call, and discarded afterwards, avoiding the memory cost.
+
+```python
+df.with_columns(
+    city=find_closest_city("lat", "lon", cache_mode="do_not_cache"),
+)
+```
