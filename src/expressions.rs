@@ -40,10 +40,15 @@ fn reverse_geocode(
     let owned_geocoder;
     let geocoder = match cache_mode {
         CacheMode::CacheForever => GEOCODER.get_or_init(ReverseGeocoder::new),
-        CacheMode::DoNotCache => {
-            owned_geocoder = ReverseGeocoder::new();
-            &owned_geocoder
-        }
+        CacheMode::DoNotCache => match GEOCODER.get() {
+            // Even if the cache_mode requests no caching, we'll check and use the
+            // global cache if it's available from previous calls.
+            Some(geocoder) => geocoder,
+            None => {
+                owned_geocoder = ReverseGeocoder::new();
+                &owned_geocoder
+            }
+        },
     };
 
     let out = binary_elementwise_into_string_amortized(lhs, rhs, |lat, lon, buf| {
