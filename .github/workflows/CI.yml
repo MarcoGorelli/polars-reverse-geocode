@@ -34,7 +34,7 @@ jobs:
     strategy:
       matrix:
         target: [x86_64]
-        python-version: ["3.9", "3.11", "3.13", "3.14"]
+        python-version: ["3.10", "3.11", "3.13", "3.14"]
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -45,16 +45,19 @@ jobs:
         run: rustup show
       - uses: mozilla-actions/sccache-action@v0.0.6
       - run: make venv
+      - run: .venv/bin/python -m ruff --version
       - run: make pre-commit
       - run: make install
       - run: make test
+      - name: Assert git tree is not dirty
+        run: git diff --exit-code
 
   linux-min-versions-just-test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         target: [x86_64]
-        python-version: ["3.9"]
+        python-version: ["3.10"]
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
@@ -68,6 +71,8 @@ jobs:
       - run: .venv/bin/python -m pip install polars==1.3.0  # min version
       - run: make install
       - run: make test
+      - name: Assert git tree is not dirty
+        run: git diff --exit-code
 
   linux:
     runs-on: ${{ matrix.platform.runner }}

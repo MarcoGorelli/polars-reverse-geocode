@@ -4,7 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "polars-reverse-geocode"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 readme = "README.md"
 classifiers = [
   "Programming Language :: Rust",
@@ -17,3 +17,26 @@ dynamic = ["version"]
 Repository = "https://github.com/MarcoGorelli/polars-reverse-geocode"
 Issues = "https://github.com/MarcoGorelli/polars-reverse-geocode/issues"
 
+[tool.ruff]
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "COM812", # Trailing comma required.
+    "D203",
+    "D213",
+    "CPY001", # Copyright notice.
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = [
+    "D",
+    "S", # Allow asserts, subprocess usage.
+]
+"t.py" = [
+    "T201", # Allow print.
+]
+"bump_version.py" = [
+    "ALL",
+]

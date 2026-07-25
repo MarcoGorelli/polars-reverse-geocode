@@ -118,5 +118,5 @@ def test_cache_mode_cache_forever_caches_after_first_call() -> None:
         assert second_call_ms < 100, (
             f"expected cached call to take <100ms, took {second_call_ms:.2f}ms"
         )
-    """
+    """  # noqa: E501
     _run_timing_script(script)
