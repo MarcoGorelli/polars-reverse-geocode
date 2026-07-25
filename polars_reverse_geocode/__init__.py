@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Literal
 
 from polars.plugins import register_plugin_function
 
-__version__ = "0.1.9"
+__version__ = "0.8.1"
 
 if TYPE_CHECKING:
     import polars as pl

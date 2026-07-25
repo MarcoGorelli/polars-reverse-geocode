@@ -17,15 +17,20 @@ elif how == "major":
     version = ".".join([str(int(version[0]) + 1), "0", "0"])
 else:
     sys.exit(1)
-content = content.replace(f'version = "{old_version}"', f'version = "{version}"')
+old_marker = f'version = "{old_version}"'
+assert old_marker in content, f"{old_marker!r} not found in Cargo.toml"
+content = content.replace(old_marker, f'version = "{version}"')
 with open("Cargo.toml", "w", encoding="utf-8") as f:
     f.write(content)
 
 with open("polars_reverse_geocode/__init__.py", "r", encoding="utf-8") as f:
     content = f.read()
-content = content.replace(
-    f'__version__ = "{old_version}"', f'__version__ = "{version}"'
+old_marker = f'__version__ = "{old_version}"'
+assert old_marker in content, (
+    f"{old_marker!r} not found in polars_reverse_geocode/__init__.py "
+    "(it may be out of sync with Cargo.toml)"
 )
+content = content.replace(old_marker, f'__version__ = "{version}"')
 with open("polars_reverse_geocode/__init__.py", "w", encoding="utf-8") as f:
     f.write(content)
 
