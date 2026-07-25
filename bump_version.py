@@ -1,4 +1,3 @@
-# ruff: noqa
 # type: ignore
 import sys
 import re
@@ -18,9 +17,7 @@ elif how == "major":
     version = ".".join([str(int(version[0]) + 1), "0", "0"])
 else:
     sys.exit(1)
-content = content.replace(
-    f'version = "{old_version}"', f'version = "{version}"'
-)
+content = content.replace(f'version = "{old_version}"', f'version = "{version}"')
 with open("Cargo.toml", "w", encoding="utf-8") as f:
     f.write(content)
 
