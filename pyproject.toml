@@ -4,7 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "polars-reverse-geocode"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 readme = "README.md"
 classifiers = [
   "Programming Language :: Rust",
@@ -16,4 +16,3 @@ dynamic = ["version"]
 [project.urls]
 Repository = "https://github.com/MarcoGorelli/polars-reverse-geocode"
 Issues = "https://github.com/MarcoGorelli/polars-reverse-geocode/issues"
-
